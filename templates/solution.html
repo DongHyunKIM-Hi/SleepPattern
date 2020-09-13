@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <!-- 쿠키 사용을 위한 Jquery-cookie 임포트 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <script>
+        // 로딩 후 바로 실행
+
+        if ($.cookie('mytoken') == undefined) {
+            // mytoken이라는 값으로 쿠키가 없으면, 로그인 창으로 이동시킵니다.
+            alert('먼저 로그인을 해주세요')
+            window.location.href = '/login'
+        } else {
+            // 쿠기가 있으면, 유저 정보를 불러옵니다.
+            load_user_info()
+        }
+
+
+        // 쿠키에 가지고 있는 token을 헤더에 담아서 보냅니다.
+        function load_user_info() {
+            $.ajax({
+                type: "GET",
+                url: "/api/nick",
+                headers: {
+                    'token_give': $.cookie('mytoken')
+                },
+                data: {},
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        // 올바른 결과값을 받으면 nickname을 입력해줍니다.
+                        $('#nickname').text(response['nickname'])
+                    } else {
+                        // 에러가 나면 메시지를 띄우고 로그인 창으로 이동합니다.
+                        alert(response['msg'])
+                        window.location.href = '/login'
+                    }
+                }
+            })
+        }
+
+        // 로그아웃은 내가 가지고 있는 토큰만 쿠키에서 없애면 됩니다.
+        function logout() {
+            $.removeCookie('mytoken');
+            alert('로그아웃!')
+            window.location.href = '/login'
+        }
+
+
+
+        $(document).ready(function () {
+
+
+
+            listing()
+
+        });
+
+
+
+        function listing() {
+            $.ajax({
+                type: "GET",
+                url: '/show',
+                data: {},
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        let orders = response['all_orders']
+
+                        for (let i = 0; i < orders.length; i++) {
+
+                            let name = orders[i]['name']
+                            let age = orders[i]['age']
+                            let phone = orders[i]['phone']
+                            let image = orders[i]['image']
+                            make_card(i, image, name, age, phone)
+                        }
+                    }
+                }
+            })
+        }
+
+        function make_card(i, image, name, age, phone) {
+            let temp_html = `<div class="card">
+                                <img class="card-img-top" src="${image}"
+                                    alt="Card image cap">
+                                <div class="card-body">
+                                    <h2>${name}</h2>
+                                    <p>${age}</p>
+                                    <p>${phone}</p>
+                                    <a class="btn btn-secondary" id="cardbtn" onclick="popup1('${name}')" role="button">솔루션</a>
+                                </div>
+
+                            </div>`;
+            $('#cards-box').append(temp_html);
+        }
+
+        function popup1(name) {
+            let want_name = name;
+            var win = window.open('/popup1?name=' + want_name, 'win', 'width=1000, height=600');
+        }
+    </script>
+
+
+    <title>스파르타코딩클럽 | 부트스트랩 연습하기</title>
+    <style>
+        /* GLOBAL STYLES
+-------------------------------------------------- */
+        /* Padding below the footer and lighter body text */
+
+        body {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+            color: black;
+        }
+
+        .row {
+            padding: 50px;
+        }
+
+        .carousel-inner>.carousel-item>img {
+            width: 640px;
+            height: 720px;
+        }
+
+        .form-inline {
+            margin-left: 800px;
+        }
+
+        /*LOGIN BOX*/
+
+        .loginbox {
+            margin: 120px auto;
+            width: 500px;
+        }
+
+        /*LIST*/
+
+        .orders {
+            margin-top: 100px;
+        }
+
+        /*MYPAGE*/
+
+        .info {
+            margin: 120px auto;
+            width: 500px;
+        }
+
+        /*Panel*/
+
+        #LoginPanel {
+            background-image: url('static/css/images/Login1.jpg');
+            background-position: center;
+            background-size: 1920px 600px;
+            background-repeat: no-repeat;
+            margin-top: 10px;
+            width: 1920px;
+            height: 400px;
+            text-align: center;
+            color: white;
+            padding-top: 180px;
+        }
+
+        #ListPanel {
+            background-image: url("static/css/images/List.jpg");
+            background-position: center;
+            background-size: 1920px 600px;
+            background-repeat: no-repeat;
+            margin-top: 10px;
+            height: 400px;
+            text-align: center;
+            color: white;
+            padding-top: 180px;
+        }
+
+        #mypagePanel {
+            background-image: url("static/css/images/mypage.jpg");
+            background-position: center;
+            background-size: 1920px 700px;
+            background-repeat: no-repeat;
+            margin-top: 10px;
+            height: 400px;
+            text-align: center;
+            color: white;
+            padding-top: 180px;
+        }
+
+        #solutionPanel {
+            background-image: url("static/css/images/solution.jpg");
+            background-position: center;
+            background-size: 1920px 450px;
+            background-repeat: no-repeat;
+            margin-top: 10px;
+            height: 400px;
+            text-align: center;
+            color: white;
+            padding-top: 180px;
+        }
+
+        #resultPanel {
+            background-image: url("static/css/images/graph.jpg");
+            background-position: center;
+            background-size: 1920px 600px;
+            background-repeat: no-repeat;
+            margin-top: 10px;
+            height: 400px;
+            text-align: center;
+            color: white;
+            padding-top: 180px;
+            margin-bottom: 50px;
+        }
+
+        #reservationPanel {
+            background-image: url("static/css/images/consulting.jpg");
+            background-position: center;
+            background-size: 1920px 600px;
+            background-repeat: no-repeat;
+            margin-top: 10px;
+            height: 400px;
+            text-align: center;
+            color: white;
+            padding-top: 180px;
+            margin-bottom: 50px;
+        }
+
+        /*clientimage*/
+
+        .wrap {
+            width: 1000px;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        /*IMAGES*/
+
+        #image1 {
+            width: 150px;
+            height: 150px;
+        }
+
+        #image2 {
+            width: 150px;
+            height: 150px;
+        }
+
+        #image3 {
+            width: 150px;
+            height: 150px;
+        }
+
+        #counselor1 {
+            width: 450px;
+            height: 450px;
+        }
+
+        #counselor2 {
+            width: 450px;
+            height: 450px;
+        }
+
+        #counselor3 {
+            width: 450px;
+            height: 450px;
+        }
+
+        /*chart*/
+        /* CUSTOMIZE THE CAROUSEL
+  -------------------------------------------------- */
+        /* Carousel base class */
+
+        .carousel {
+            margin-bottom: 4rem;
+        }
+
+        /* Since positioning the image, we need to help out the caption */
+
+        .carousel-caption {
+            bottom: 3rem;
+            z-index: 10;
+        }
+
+        /* Declare heights because of positioning of img element */
+
+        .carousel-item {
+            height: 32rem;
+        }
+
+        .carousel-item>img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            height: 32rem;
+        }
+
+        /* MARKETING CONTENT
+  -------------------------------------------------- */
+        /* Center align the text within the three columns below the carousel */
+
+        .marketing .col-lg-4 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .marketing h2 {
+            font-weight: 400;
+        }
+
+        .marketing .col-lg-4 p {
+            margin-right: .75rem;
+            margin-left: .75rem;
+        }
+
+        /* Featurettes
+  ------------------------- */
+
+        .featurette-divider {
+            margin: 5rem 0;
+            /* Space out the Bootstrap <hr> more */
+        }
+
+        /* Thin out the marketing headings */
+
+        .featurette-heading {
+            font-weight: 300;
+            line-height: 1;
+            letter-spacing: -.05rem;
+        }
+
+        /* RESPONSIVE CSS
+  -------------------------------------------------- */
+
+        @media (min-width: 40em) {
+
+            /* Bump up size of carousel content */
+            .carousel-caption p {
+                margin-bottom: 1.25rem;
+                font-size: 1.25rem;
+                line-height: 1.4;
+            }
+
+            .featurette-heading {
+                font-size: 50px;
+            }
+        }
+
+        @media (min-width: 62em) {
+            .featurette-heading {
+                margin-top: 7rem;
+            }
+        }
+
+        #cardbtn {
+            color: white;
+        }
+
+        #firebasebtn{
+            margin: 50px auto;
+            width: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="/jalggang">이제 그만 잘깡?</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/jalggang">HOME <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="logout()">LOGOUT</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://kjhnav.dothome.co.kr/PSQI.php">DIAGNOSE</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/mypage">MY PAGE</a>
+                    </li>
+                </ul>
+                <form class="form-inline mt-2 mt-md-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+                        style="height: 44px;">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><img
+                            src="{{ url_for('static', filename='css/images/search.jpg') }}" width="31px"
+                            height="31px" /></button>
+                </form>
+            </div>
+        </nav>
+    </header>
+    <div id="solutionPanel" class="Panel">
+        <h5>For Good Sleep & Life Style</h5>
+        <h1>솔루션</h1>
+    </div>
+    <div id="firebasebtn">
+        <a class="btn btn-secondary" href="https://console.firebase.google.com/project/jebal-e5856/firestore/data~2Fclients~2F%EC%95%84%EB%A6%B0" target="_blank" role="button">파이어베이스</a>
+    </div>
+    <div class="container marketing">
+        <div class="wrap">
+            <div class="card-columns" id="cards-box">
+
+            </div>
+
+            <hr class="featurette-divider">
+
+        </div>
+
+        <footer class="container">
+            <p class="float-right"><a href="#">Back to top</a></p>
+            <p>© 2017-2020 Company, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+        </footer>
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- 쿠키 사용을 위한 Jquery-cookie 임포트 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jalggang.css') }}">
+    <script>
+        // 로딩 후 바로 실행
+        $(document).ready(function() {
+            if ($.cookie('mytoken') == undefined) {
+                // mytoken이라는 값으로 쿠키가 없으면, 로그인 창으로 이동시킵니다.
+                alert('먼저 로그인을 해주세요')
+                window.location.href = '/login'
+            } else {
+                // 쿠기가 있으면, 유저 정보를 불러옵니다.
+
+                listing()
+            }
+        });
+
+
+
+        // 로그아웃은 내가 가지고 있는 토큰만 쿠키에서 없애면 됩니다.
+        function logout() {
+            $.removeCookie('mytoken');
+            alert('로그아웃!')
+            window.location.href = '/login'
+        }
+
+        function listing() {
+            $.ajax({
+                type: "GET",
+                url: '/show',
+                data: {},
+                success: function(response) {
+                    if (response['result'] == 'success') {
+                        let orders = response['all_orders']
+
+                        for (let i = 0; i < orders.length; i++) {
+                            let name = orders[i]['name']
+                            let age = orders[i]['age']
+                            let phone = orders[i]['phone']
+
+                            let temp_html = `<tr>
+                                                <th scope="row">${name}</th>
+                                                <td>${age}</td>
+                                                <td>${phone}</td>
+                                            </tr>`
+                            $('#order-box').append(temp_html)
+                        }
+                    }
+                }
+            })
+        }
+
+        function popupadd() {
+            var win = window.open('/popupadd', 'win', 'width=1000, height=600');
+        }
+    </script>
+    <title>스파르타코딩클럽 | 부트스트랩 연습하기</title>
+   
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="/jalggang">이제 그만 잘깡?</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/jalggang">HOME <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="logout()">LOGOUT</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://kjhnav.dothome.co.kr/PSQI.php">DIAGNOSE</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/mypage">MY PAGE</a>
+                    </li>
+                </ul>
+                <form class="form-inline mt-2 mt-md-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" style="height: 44px;">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><img
+                            src="{{ url_for('static', filename='css/images/search.jpg') }}" width="31px"
+                            height="31px" /></button>
+                </form>
+            </div>
+        </nav>
+    </header>
+    <div id="mypagePanel" style="background-image: url('static/css/images/mypage.jpg')">
+        <h5>For Good Sleep & Life Style</h5>
+        <h1>마이페이지</h1>
+    </div>
+    <div class="container marketing">
+        <h1><br><br>회원 목록</h1>
+        <div class="orders">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">이름</th>
+                        <th scope="col">나이</th>
+                        <th scope="col">전화번호</th>
+                    </tr>
+                </thead>
+                <tbody id="order-box">
+                </tbody>
+            </table>
+            <a class="btn btn-secondary" id="cardbtn" onclick="popupadd()" role="button">회원 추가</a>
+        </div>
+
+        <hr class="featurette-divider">
+    </div>
+    <footer class="container">
+        <p class="float-right"><a href="#">Back to top</a></p>
+        <p>© 2017-2020 Company, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+    </footer>
+</body>
+
+</html>

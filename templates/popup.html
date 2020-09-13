@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <title>솔루션 추가 페이지</title>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+    <style>
+        
+        
+        .solsolsol {
+            margin: 120px auto;
+            width: 1000px;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        #solution-list {
+            text-align: center;
+        }
+        
+        #cardbtn {
+            color: white;
+        }
+        
+        #text {
+            text-align: center;
+        }
+    </style>
+
+    <script>
+        var arr = [];
+        var name = $('#getget').text();
+        $(document).ready(function() {
+            list()
+        });
+
+        function list() {
+            let name = $('#getget').text();
+            $.ajax({
+                type: "GET",
+                url: '/show1?name=' + name,
+                data: {},
+                success: function(response) {
+                    if (response['result'] == 'success') {
+                        let orders = response['all_orders']
+                        for (let i = 0; i < orders.length; i++) {
+                            let solution = orders[i]
+                            let temp_html = `<tr>
+                                  <td>${solution}</td>
+                               </tr>`
+                            $('#solution_list').append(temp_html)
+                            arr[i] = solution;
+                        }
+                    }
+                }
+            })
+
+        }
+
+        function select_solution(obj) {
+            let sul = $('#mylist option:selected').text();
+            if (sul == "직접입력하기") {
+                $('#direct_input').show();
+            } else {
+                $('#direct_input').hide();
+            }
+        }
+
+        function deletesolution() {
+            arr.pop()
+            $('#solution_list').empty()
+            for (let i = 0; i < arr.length; i++) {
+                let temp_html = `<div class="sol_list">${arr[i]}</div>`
+                $('#solution_list').append(temp_html)
+            }
+        }
+
+        function myenroll() {
+            let sul = $('#mylist option:selected').text();
+            if (sul == "직접입력하기") {
+                sul = $('#direct_input').val()
+                if (sul == '') {
+                    alert("솔루션을 입력하세요")
+                    return
+                }
+            }
+            $('#direct_input').val('')
+            arr.push(sul)
+            $('#solution_list').empty()
+            for (let i = 0; i < arr.length; i++) {
+                let temp_html = `<div class="sol_list">${arr[i]}</div>`
+                $('#solution_list').append(temp_html)
+            }
+        }
+
+        function savesolution() {
+            alert("실행");
+            let name = $('#getget').text();
+            $.ajax({
+                type: "POST",
+                url: "/savedb",
+                data: JSON.stringify({
+                    name_give: name,
+                    arr
+                }),
+                contentType: "application/json; charset=utf-8",
+                success: function() {}
+            })
+        }
+    </script>
+
+</head>
+
+<body>
+
+
+    <div class="solsolsol">
+        <h1 id="getget">{{name}}</h1>
+        <div>
+            <br><br><br>
+            <select id="mylist" onchange="jQuery:select_solution(this)">
+                <option value="1번">선택사항1</option>
+                <option value="2번">선택사항2</option>
+                <option value="3번">선택사항3</option>
+                <option value="4번">직접입력하기</option>
+            </select>
+            <select id="mylist1" onchange="jQuery:select_solution(this)">
+                <option value="1번">선택사항1</option>
+                <option value="2번">선택사항2</option>
+                <option value="3번">선택사항3</option>
+                <option value="4번">직접입력하기</option>
+            </select>
+            <a class="btn btn-secondary" id="cardbtn" onclick="myenroll()" role="button">추가</a>
+        </div>
+        <input type="text" id="direct_input" style="display: none;" placeholder="직접입력하세요">
+        <br>
+        <div id="solution_list">
+        </div>
+        <a class="btn btn-secondary" id="cardbtn" onclick="deletesolution()" role="button">솔루션 삭제</a>
+        <a class="btn btn-secondary" id="cardbtn" onclick="savesolution()" role="button">솔루션 저장</a>
+    </div>
+
+
+
+
+
+</body>
+
+</html>

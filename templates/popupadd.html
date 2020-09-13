@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <title>회원추가</title>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Do Hyeon', sans-serif;
+        }
+
+
+        .price {
+            font-size: 16px;
+        }
+
+        .description-box {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .order-box {
+            margin-top: 50px;
+            width: 500px;
+        }
+
+        .btn-box {
+            width: 500px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .wrap {
+
+            width: 500px;
+            margin: 100px auto;
+        }
+
+        .dollar {
+            color: blue;
+            margin-bottom: 10px;
+        }
+    </style>
+    <script>
+        function order() {
+
+            let name = $('#name').val();
+            let age = $('#age').val();
+            let phone = $('#phone').val();
+            let id = $('#id').val();
+            let password = $('#password').val();
+            let image = $('#image').val();
+
+            if (name == '') {
+                alert('이름을 입력해주세요');
+            } else if (age == '') {
+                alert('나이를 입력해주세요');
+            } else if (phone == '') {
+                alert('전화번호를 입력해주세요');
+            } else if (id == '') {
+                alert('ID를 입력해주세요');
+            } else if (password == '') {
+                alert('비밀번호를 입력해주세요');
+            } else if (image == '') {
+                alert('이미지를 입력해주세요');
+            } else {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/addcustomer",
+                    data: {
+                        name_give: name,
+                        age_give: age,
+                        phone_give: phone,
+                        id_give: id,
+                        password_give: password,
+                        image_give: image
+                    },
+                    success: function (response) {
+                        if (response['result'] == 'success') {
+                            if (confirm("추가하시겠습니까?")) {
+                                self.close();
+                                window.opener.location.reload();
+                            }
+                        }
+                    }
+                })
+
+            }
+
+        }
+    </script>
+
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="description-box">
+            <h1>회원정보를 입력해 주십시오.</h1>
+        </div>
+        <div class="order-box">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">이름</span>
+                </div>
+                <input type="text" class="form-control" id="name" aria-describedby="basic-addon3">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">나이</span>
+                </div>
+                <input type="text" class="form-control" id="age" aria-describedby="basic-addon3">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">전화번호</span>
+                </div>
+                <input type="text" class="form-control" id="phone" aria-describedby="basic-addon3">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">ID</span>
+                </div>
+                <input type="text" class="form-control" id="id" aria-describedby="basic-addon3">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">비밀번호</span>
+                </div>
+                <input type="text" class="form-control" id="password" aria-describedby="basic-addon3">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">이미지</span>
+                </div>
+                <input type="text" class="form-control" id="image" aria-describedby="basic-addon3">
+            </div>
+        </div>
+        <div class="btn-box">
+            <button onclick="order()" type="button" class="btn btn-primary">추가하기</button>
+        </div>
+
+    </div>
+</body>
+
+</html>

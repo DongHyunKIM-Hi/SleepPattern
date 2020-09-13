@@ -1,0 +1,23 @@
+@charset "utf-8";
+/* NTS UIT Development Team PSJ 2014-04-16 */
+
+/* Common */
+.u_likeit_list_module div,.u_likeit_list_module ul,.u_likeit_list_module li,.u_likeit_list_module p,.u_likeit_list_module a,.u_likeit_list_module img,.u_likeit_list_module span,.u_likeit_list_module em,.u_likeit_list_module strong{float:none;position:static;margin:0;padding:0;border:0;background:transparent;letter-spacing:0;line-height:normal;text-align:left;text-decoration:none;text-indent:0;vertical-align:baseline;white-space:normal;list-style:none;font-style:normal;word-spacing:0;font-family:normal}
+
+/* background image */
+.u_likeit_list_module .u_likeit_btn .u_ico{background-repeat:no-repeat}
+
+/* 좋아요 버튼 */
+.u_likeit_list_module .u_none_txt .u_txt{display:none !important}
+.u_likeit_list_module .u_likeit_list_btn{display:inline-block;overflow:hidden;vertical-align:top}
+.u_likeit_list_module .u_likeit_list_btn .u_ico{display:inline-block;overflow:hidden;vertical-align:top}
+.u_likeit_list_module .u_likeit_list_btn .u_cnt,.u_likeit_list_module .u_likeit_list_btn .u_txt{display:inline-block;vertical-align:top;font-weight:bold}
+
+/* 이미지 위에 있는 경우 */
+.u_likeit_list_module .u_likeit_list_btn.u_type_img{}
+
+/* 흰 배경인 경우 */
+.u_likeit_list_module .u_likeit_list_btn.u_type_bright{}
+
+/* 어두운 배경인 경우 */
+.u_likeit_list_module .u_likeit_list_btn.u_type_dark{}

@@ -1,0 +1,15 @@
+@charset "utf-8";
+.u_likeit_list_module{display:inline-block;*display:inline;vertical-align:top}
+.u_likeit_list_module .u_likeit_list_btn{height:19px;padding:4px 7px 0;border:1px solid #d2d2d2;background-color:#fff;color:#555;text-decoration:none;line-height:16px;font-weight:bold;text-align:center}
+.u_likeit_list_module .u_likeit_list_btn .u_ico{width:12px;height:11px;margin:1px 0 -1px;background:url(https://ssl.pstatic.net/sstatic/search/pc/img/sp_like.png) no-repeat;vertical-align:baseline}
+.u_likeit_list_module .u_likeit_list_btn.on .u_ico{background-position:-15px 0}
+.u_likeit_list_module .u_likeit_list_btn .u_cnt{font-family:tahoma,sans-serif;font-size:12px;vertical-align:baseline}
+.u_likeit_list_module .u_likeit_list_btn.u_none_border{height:21px;padding:4px 0 0;border:0;background:none;color:#444;font-weight:normal;line-height:18px}
+.u_likeit_list_module .u_likeit_list_btn.u_none_border .u_cnt{font-weight:normal}
+.u_likeit_list_module .u_likeit_list_btn.zzim{height:21px;padding:7px 7px 0;border-color:#e5e8ef;line-height:14px;}
+.u_likeit_list_module .u_likeit_list_btn.zzim .u_ico{width:14px;height:12px;background-position:-30px 0}
+.u_likeit_list_module .u_likeit_list_btn.zzim.on .u_ico{background-position:-46px 0}
+.u_likeit_list_module .u_likeit_list_btn.zzim.hide_cnt .u_txt,.u_likeit_list_module .u_likeit_list_btn.zzim.hide_cnt .u_cnt{display:none}
+.u_likeit_list_module .u_likeit_list_btn.zzim.big{height:25px;padding:9px 8px 0 9px}
+.u_likeit_list_module .u_likeit_list_btn.zzim.big .u_ico{width:17px;height:15px;background-position:0 -14px}
+.u_likeit_list_module .u_likeit_list_btn.zzim.big.on .u_ico{background-position:-18px -14px}
