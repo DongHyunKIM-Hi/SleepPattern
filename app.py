@@ -233,8 +233,8 @@ def show():
 
 
 
-@app.route('/show1', methods=['GET'])
-def show1():
+@app.route('/showsol', methods=['GET'])
+def showsol():
     name=request.args.get('name')
     want_item=db.solution.find_one({'name': name},{'_id':0})
     order= list(want_item['solution'])

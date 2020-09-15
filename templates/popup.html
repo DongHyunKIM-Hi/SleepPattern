@@ -52,7 +52,7 @@
             let name = $('#getget').text();
             $.ajax({
                 type: "GET",
-                url: '/show1?name=' + name,
+                url: '/showsol?name=' + name,
                 data: {},
                 success: function(response) {
                     if (response['result'] == 'success') {
