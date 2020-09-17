@@ -122,7 +122,7 @@ def reservation():
 
 @app.route('/result')
 def result():
-   return render_template('result.html')
+   return render_template('report.html')
 
 
 @app.route('/solution')
