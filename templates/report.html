@@ -1,400 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
 
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
 
-    <title>그래프</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap"
-      rel="stylesheet"
-    />
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 
-    <style>
-      * {
-        font-family: "Do Hyeon", sans-serif;
+  <title>그래프</title>
+  <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet" />
+
+  
+  
+  <!-- Styles -->
+  <style>
+    body {
+      background-color: #30303d;
+      color: #fff;
+    }
+
+    #chartdiv {
+      width: 100%;
+      height: 500px;
+    }
+  </style>
+
+  <!-- Resources -->
+  <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/dark.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+  <!-- Chart code -->
+  <script>
+
+    am4core.ready(function () {
+      // Themes begin
+      am4core.useTheme(am4themes_dark);
+      am4core.useTheme(am4themes_animated);
+      // Themes end
+
+      var chart = am4core.create("chartdiv", am4charts.XYChart);
+      chart.colors.step = 2;
+
+      chart.legend = new am4charts.Legend();
+      chart.legend.position = "top";
+      chart.legend.paddingBottom = 20;
+      chart.legend.labels.template.maxWidth = 95;
+
+      var xAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+      xAxis.dataFields.category = "category";
+      xAxis.renderer.cellStartLocation = 0.1;
+      xAxis.renderer.cellEndLocation = 0.9;
+      xAxis.renderer.grid.template.location = 0;
+
+      var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+      yAxis.min = 0;
+
+      function createSeries(value, name) {
+        var series = chart.series.push(new am4charts.ColumnSeries());
+        series.dataFields.valueY = value;
+        series.dataFields.categoryX = "category";
+        series.name = name;
+
+        series.events.on("hidden", arrangeColumns);
+        series.events.on("shown", arrangeColumns);
+
+        var bullet = series.bullets.push(new am4charts.LabelBullet());
+        bullet.interactionsEnabled = false;
+        bullet.dy = 30;
+        bullet.label.text = "{valueY}";
+        bullet.label.fill = am4core.color("#ffffff");
+
+        return series;
       }
 
-      .price {
-        font-size: 16px;
-      }
+      
 
-      .description-box {
-        margin-top: 10px;
-        margin-bottom: 10px;
-      }
+      console.log(chart.data)
 
-      .order-box {
-        width: 500px;
-      }
 
-      .btn-box {
-        width: 500px;
-        text-align: center;
-        margin-bottom: 20px;
-      }
+      var name = $('#name').text();
+      $(document).ready(function () {
+        list()
+      });
 
-      .wrap {
-        width: 500px;
-        margin: auto;
-      }
 
-      .dollar {
-        color: blue;
-        margin-bottom: 10px;
-      }
-    </style>
-    <script>
-      function order() {
-        let name = $("#name").val();
-        let age = $("#age").val();
-        let phone = $("#phone").val();
-        let id = $("#id").val();
-        let password = $("#password").val();
-        let image = $("#image").val();
 
-        if (name == "") {
-          alert("이름을 입력해주세요!");
-        } else if (age == "") {
-          alert("나이를 입력해주세요");
-        } else if (phone == "") {
-          alert("전화번호를 입력해주세요");
-        } else if (id == "") {
-          alert("ID를 입력해주세요");
-        } else if (password == "") {
-          alert("비밀번호를 입력해주세요");
-        } else if (image == "") {
-          alert("이미지를 입력해주세요");
-        } else {
-          $.ajax({
-            type: "POST",
-            url: "/addcustomer",
-            data: {
-              name_give: name,
-              age_give: age,
-              phone_give: phone,
-              id_give: id,
-              password_give: password,
-              image_give: image,
-            },
-            success: function (response) {
-              if (response["result"] == "success") {
-                alert(response["msg"]);
-                window.location.reload();
+      function list() {
+        let name = $('#name').text();
+        $.ajax({
+          type: "GET",
+          url: '/showscore?name=' + name,
+          data: {},
+          success: function (response) {
+            if (response['result'] == 'success') {
+              let orders = response['all_orders']
+              for (let i = 0; i < orders.length; i++) {
+                let score = orders[i]
+                alert(score)
+                let temp_html = `{
+                    category: "${i}일차",
+                    no1: ${score}
+                  },`
+                chart.data.update(temp_html)
               }
-            },
-          });
-        }
-      }
-    </script>
-    <!-- Styles -->
-    <style>
-      body {
-        background-color: #30303d;
-        color: #fff;
-      }
-      #chartdiv {
-        width: 100%;
-        height: 500px;
-      }
-    </style>
-
-    <!-- Resources -->
-    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-    <script src="https://cdn.amcharts.com/lib/4/themes/dark.js"></script>
-    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
-
-    <!-- Chart code -->
-    <script>
-      am4core.ready(function () {
-        // Themes begin
-        am4core.useTheme(am4themes_dark);
-        am4core.useTheme(am4themes_animated);
-        // Themes end
-
-        var chart = am4core.create("chartdiv", am4charts.XYChart);
-        chart.colors.step = 2;
-
-        chart.legend = new am4charts.Legend();
-        chart.legend.position = "top";
-        chart.legend.paddingBottom = 20;
-        chart.legend.labels.template.maxWidth = 95;
-
-        var xAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-        xAxis.dataFields.category = "category";
-        xAxis.renderer.cellStartLocation = 0.1;
-        xAxis.renderer.cellEndLocation = 0.9;
-        xAxis.renderer.grid.template.location = 0;
-
-        var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
-        yAxis.min = 0;
-
-        function createSeries(value, name) {
-          var series = chart.series.push(new am4charts.ColumnSeries());
-          series.dataFields.valueY = value;
-          series.dataFields.categoryX = "category";
-          series.name = name;
-
-          series.events.on("hidden", arrangeColumns);
-          series.events.on("shown", arrangeColumns);
-
-          var bullet = series.bullets.push(new am4charts.LabelBullet());
-          bullet.interactionsEnabled = false;
-          bullet.dy = 30;
-          bullet.label.text = "{valueY}";
-          bullet.label.fill = am4core.color("#ffffff");
-
-          return series;
-        }
-
-        chart.data = [
-          {
-            category: "1일차",
-            no1: 7,
-            no2: 55,
-            no3: 60,
-          },
-          {
-            category: "2일차",
-            no1: 6,
-            no2: 78,
-            no3: 69,
-          },
-          {
-            category: "3일차",
-            no1: 9,
-            no2: 40,
-            no3: 45,
-          },
-          {
-            category: "4일차",
-            no1: 7,
-            no2: 33,
-            no3: 22,
-            no4: 11,
-          },
-          {
-            category: "5일차",
-            no1: 8,
-            no2: 55,
-            no3: 60,
-          },
-          {
-            category: "6일차",
-            no1: 7,
-            no2: 55,
-            no3: 60,
-          },
-          {
-            category: "7일차",
-            no1: 7,
-            no2: 55,
-            no3: 60,
-          },
-          {
-            category: "8일차",
-            no1: 6.8,
-            no2: 55,
-            no3: 60,
-          },
-          {
-            category: "9일차",
-            no1: 7.2,
-            no2: 55,
-            no3: 60,
-          },
-          {
-            category: "10일차",
-            no1: 7,
-            no2: 55,
-            no3: 60,
-          },
-          {
-            category: "11일차",
-            no1: 8,
-            no2: 55,
-            no3: 60,
-          },
-          {
-            category: "12일차",
-            no1: 7,
-            no2: 55,
-            no3: 60,
-          },
-          {
-            category: "13일차",
-            no1: 8,
-            no2: 55,
-            no3: 60,
-          },
-          {
-            category: "14일차",
-            no1: 7,
-            no2: 55,
-            no3: 60,
-          },
-        ];
-
-        createSeries("no1", "수면시간");
-        createSeries("no2", "2번요소");
-        createSeries("no3", "3번요소");
-        createSeries("no4", "4번요소");
-        createSeries("no5", "5번요소");
-        function arrangeColumns() {
-          var series = chart.series.getIndex(0);
-
-          var w =
-            1 -
-            xAxis.renderer.cellStartLocation -
-            (1 - xAxis.renderer.cellEndLocation);
-          if (series.dataItems.length > 1) {
-            var x0 = xAxis.getX(series.dataItems.getIndex(0), "categoryX");
-            var x1 = xAxis.getX(series.dataItems.getIndex(1), "categoryX");
-            var delta = ((x1 - x0) / chart.series.length) * w;
-            if (am4core.isNumber(delta)) {
-              var middle = chart.series.length / 2;
-
-              var newIndex = 0;
-              chart.series.each(function (series) {
-                if (!series.isHidden && !series.isHiding) {
-                  series.dummyData = newIndex;
-                  newIndex++;
-                } else {
-                  series.dummyData = chart.series.indexOf(series);
-                }
-              });
-              var visibleCount = newIndex;
-              var newMiddle = visibleCount / 2;
-
-              chart.series.each(function (series) {
-                var trueIndex = chart.series.indexOf(series);
-                var newIndex = series.dummyData;
-
-                var dx = (newIndex - trueIndex + middle - newMiddle) * delta;
-
-                series.animate(
-                  { property: "dx", to: dx },
-                  series.interpolationDuration,
-                  series.interpolationEasing
-                );
-                series.bulletsContainer.animate(
-                  { property: "dx", to: dx },
-                  series.interpolationDuration,
-                  series.interpolationEasing
-                );
-              });
             }
           }
+        })
+
+      }
+
+
+      createSeries("no1", "수면시간");
+      createSeries("no2", "2번요소");
+      createSeries("no3", "3번요소");
+      createSeries("no4", "4번요소");
+      createSeries("no5", "5번요소");
+      function arrangeColumns() {
+        var series = chart.series.getIndex(0);
+
+        var w =
+          1 -
+          xAxis.renderer.cellStartLocation -
+          (1 - xAxis.renderer.cellEndLocation);
+        if (series.dataItems.length > 1) {
+          var x0 = xAxis.getX(series.dataItems.getIndex(0), "categoryX");
+          var x1 = xAxis.getX(series.dataItems.getIndex(1), "categoryX");
+          var delta = ((x1 - x0) / chart.series.length) * w;
+          if (am4core.isNumber(delta)) {
+            var middle = chart.series.length / 2;
+
+            var newIndex = 0;
+            chart.series.each(function (series) {
+              if (!series.isHidden && !series.isHiding) {
+                series.dummyData = newIndex;
+                newIndex++;
+              } else {
+                series.dummyData = chart.series.indexOf(series);
+              }
+            });
+            var visibleCount = newIndex;
+            var newMiddle = visibleCount / 2;
+
+            chart.series.each(function (series) {
+              var trueIndex = chart.series.indexOf(series);
+              var newIndex = series.dummyData;
+
+              var dx = (newIndex - trueIndex + middle - newMiddle) * delta;
+
+              series.animate(
+                { property: "dx", to: dx },
+                series.interpolationDuration,
+                series.interpolationEasing
+              );
+              series.bulletsContainer.animate(
+                { property: "dx", to: dx },
+                series.interpolationDuration,
+                series.interpolationEasing
+              );
+            });
+          }
         }
-      }); // end am4core.ready()
-    </script>
+      }
+    }); // end am4core.ready()
+  </script>
+</head>
 
-    <!-- HTML -->
-    <div id="chartdiv"></div>
-  </head>
+<body>
+  <div id="chartdiv"></div>
+  <h1 id="name" style="text-align: center;">{{name}}</h1>
+  
+</body>
 
-  <body>
-    <div class="wrap">
-      <div class="order-box">
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon3">이름</span>
-          </div>
-          <input
-            type="text"
-            class="form-control"
-            id="name"
-            aria-describedby="basic-addon3"
-          />
-        </div>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon3">나이</span>
-          </div>
-          <input
-            type="text"
-            class="form-control"
-            id="age"
-            aria-describedby="basic-addon3"
-          />
-        </div>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon3">전화번호</span>
-          </div>
-          <input
-            type="text"
-            class="form-control"
-            id="phone"
-            aria-describedby="basic-addon3"
-          />
-        </div>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon3">ID</span>
-          </div>
-          <input
-            type="text"
-            class="form-control"
-            id="id"
-            aria-describedby="basic-addon3"
-          />
-        </div>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon3">비밀번호</span>
-          </div>
-          <input
-            type="text"
-            class="form-control"
-            id="password"
-            aria-describedby="basic-addon3"
-          />
-        </div>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon3">이미지</span>
-          </div>
-          <input
-            type="text"
-            class="form-control"
-            id="image"
-            aria-describedby="basic-addon3"
-          />
-        </div>
-      </div>
-      <div class="btn-box">
-        <button onclick="order()" type="button" class="btn btn-primary">
-          주문하기
-        </button>
-      </div>
-    </div>
-  </body>
 </html>

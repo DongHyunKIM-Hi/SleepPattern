@@ -2,25 +2,31 @@
 <html lang="en">
 
 <head>
+    <title>수면깡 메인페이지</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
     <!-- 쿠키 사용을 위한 Jquery-cookie 임포트 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/jalggang.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jalggang.css')}}?ver=2">
     <script>
         // 로딩 후 바로 실행
-        $(document).ready(function() {
+        $(document).ready(function () {
             if ($.cookie('mytoken') == undefined) {
                 // mytoken이라는 값으로 쿠키가 없으면, 로그인 창으로 이동시킵니다.
                 alert('먼저 로그인을 해주세요')
@@ -40,7 +46,7 @@
                     'token_give': $.cookie('mytoken')
                 },
                 data: {},
-                success: function(response) {
+                success: function (response) {
                     if (response['result'] == 'success') {
                         // 올바른 결과값을 받으면 nickname을 입력해줍니다.
                         $('#nickname').text(response['nickname'])
@@ -61,16 +67,18 @@
             window.location.href = '/login'
         }
     </script>
-
-
+    
+    
 </head>
-
 <body>
-
     <header>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="/jalggang">이제 그만 잘깡?</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <nav id="nav" class="navbar navbar-expand-md navbar-dark fixed-top bg-black"
+            style="padding: 0%; background-color: black;">
+            <a class="nav-link" href="/jalggang">
+                <img src="{{ url_for('static', filename='css/images/logo(black).jpg') }}" width="70px" height="50px" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -89,10 +97,11 @@
                     </li>
                 </ul>
                 <form class="form-inline mt-2 mt-md-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" style="height: 44px;">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><img
-                            src="{{ url_for('static', filename='css/images/search.jpg') }}" width="31px"
-                            height="31px" /></button>
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+                        style="height: 44px;">
+                    <a id="nav" class="nav-link" href="#">
+                        <img src="{{ url_for('static', filename='css/images/search.png') }}" width="31px" height="31px" />
+                    </a>
                 </form>
             </div>
         </nav>
@@ -104,27 +113,32 @@
             <div class="carousel-inner">
                 <!-- 슬라이드 쇼 -->
                 <div class="carousel-item active">
-                    <!--가로--><img class="d-block w-100" src="{{ url_for('static', filename='css/images/slide1.jpg') }}" alt="First slide">
+                    <!--가로--><img class="d-block w-100" src="{{ url_for('static', filename='css/images/slide1.jpg') }}"
+                        alt="First slide">
                     <div class="carousel-caption d-none d-md-block">
                         <h1>양질의 수면을 원하십니까?<br>예약하십시오.</h1>
                     </div>
                 </div>
-                <div class="carousel-item"> <img class="d-block w-100" src="{{ url_for('static', filename='css/images/slide2.jpg') }}" alt="Second slide">
+                <div class="carousel-item"> <img class="d-block w-100"
+                        src="{{ url_for('static', filename='css/images/slide2.jpg') }}" alt="Second slide">
                     <div class="carousel-caption d-none d-md-block">
                         <h1>남다른 클라스의 솔루션을 경험해 보십시오.<br>예약하십시오.</h1>
                     </div>
                 </div>
-                <div class="carousel-item"> <img class="d-block w-100" src="{{ url_for('static', filename='css/images/slide3.jpg') }}" alt="Third slide">
+                <div class="carousel-item"> <img class="d-block w-100"
+                        src="{{ url_for('static', filename='css/images/slide3.jpg') }}" alt="Third slide">
                     <div class="carousel-caption d-none d-md-block">
                         <h1>불규칙한 수면패턴은 만병의 근원입니다.<br>예약하십시오.</h1>
                     </div>
                 </div>
                 <!-- / 슬라이드 쇼 끝 -->
                 <!-- 왼쪽 오른쪽 화살표 버튼 -->
-                <a class="carousel-control-prev" href="#demo" data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <a class="carousel-control-prev" href="#demo" data-slide="prev"> <span
+                        class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <!-- <span>Previous</span> -->
                 </a>
-                <a class="carousel-control-next" href="#demo" data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <a class="carousel-control-next" href="#demo" data-slide="next"> <span
+                        class="carousel-control-next-icon" aria-hidden="true"></span>
                     <!-- <span>Next</span> --></a>
                 <!-- / 화살표 버튼 끝 -->
                 <!-- 인디케이터 -->
@@ -154,14 +168,16 @@
                     <img id="image2" src="{{ url_for('static', filename='css/images/graph1.jpg') }}">
                     <h2><br>통계</h2>
                     <p><br>회원님의 수면 중 뒤척임 정도, 코골이 등<br>수면의 질을 그래프를 통하여 나타냅니다.</p>
-                    <p><br><a class="btn btn-secondary" href="/result" role="button">View details »</a></p>
+                    <p><br><a class="btn btn-secondary" href="/result" role="button" target="_blank">View details »</a>
+                    </p>
                 </div>
                 <!-- /.col-lg-4 -->
                 <div class="col-lg-4">
                     <img id="image3" src="{{ url_for('static', filename='css/images/calendar.jpg') }}">
                     <h2><br>상담예약/확인</h2>
                     <p><br>전문 상담사와 상담 예약을 잡으십시오.<br>수면의 질을 넘어, 당신의 인생이 달라집니다.</p>
-                    <p><br><a class="btn btn-secondary" href="http://15.164.163.148:5001/" target="_blank" role="button">View details »</a></p>
+                    <p><br><a class="btn btn-secondary" href="http://15.164.163.148:5001/" target="_blank"
+                            role="button">View details »</a></p>
                 </div>
                 <!-- /.col-lg-4 -->
             </div>
@@ -170,7 +186,7 @@
 
             <!-- START THE FEATURETTES -->
 
-            <hr class="featurette-divider">
+            <hr class="featurette-divider" style="border: solid 1px white">
 
             <div class="row featurette">
                 <div class="col-md-7">
@@ -182,7 +198,7 @@
                 </div>
             </div>
 
-            <hr class="featurette-divider">
+            <hr class="featurette-divider" style="border: solid 1px white">
 
             <div class="row featurette">
                 <div class="col-md-7 order-md-2" style="text-align: right;">
@@ -195,7 +211,7 @@
                 </div>
             </div>
 
-            <hr class="featurette-divider">
+            <hr class="featurette-divider" style="border: solid 1px white">
 
             <div class="row featurette">
                 <div class="col-md-7">
@@ -207,7 +223,7 @@
                 </div>
             </div>
 
-            <hr class="featurette-divider">
+            <hr class="featurette-divider" style="border: solid 1px white">
 
             <div class="row featurette">
                 <div class="col-md-7 order-md-2" style="text-align: right;">
@@ -220,7 +236,7 @@
                 </div>
             </div>
 
-            <hr class="featurette-divider">
+            <hr class="featurette-divider" style="border: solid 1px white">
 
             <!-- /END THE FEATURETTES -->
 

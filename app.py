@@ -122,7 +122,8 @@ def reservation():
 
 @app.route('/result')
 def result():
-   return render_template('report.html')
+   want_name=request.args.get('name')
+   return render_template('report.html', name = want_name)
 
 
 @app.route('/solution')
@@ -238,8 +239,15 @@ def showsol():
     name=request.args.get('name')
     want_item=db.solution.find_one({'name': name},{'_id':0})
     order= list(want_item['solution'])
-    orders = list(db.solution.find({'name': name},{'_id':0}))
     return jsonify({'result':'success', 'all_orders':order})
+
+@app.route('/showscore', methods=['GET'])
+def showscore():
+   name=request.args.get('name')
+   want_item=db.solution.find_one({'name': name},{'_id':0})
+   order= list(want_item['score'])
+   print(order)
+   return jsonify({'result':'success', 'all_orders':order})
 
 @app.route('/show2', methods=['GET'])
 def show2():

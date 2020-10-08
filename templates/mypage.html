@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <title>마이페이지</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,7 +18,7 @@
 
     <!-- 쿠키 사용을 위한 Jquery-cookie 임포트 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/jalggang.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jalggang.css') }}?ver=11">
     <script>
         // 로딩 후 바로 실행
         $(document).ready(function() {
@@ -56,7 +57,7 @@
                             let phone = orders[i]['phone']
 
                             let temp_html = `<tr>
-                                                <th scope="row">${name}</th>
+                                                <th>${name}</th>
                                                 <td>${age}</td>
                                                 <td>${phone}</td>
                                             </tr>`
@@ -71,15 +72,23 @@
             var win = window.open('/popupadd', 'win', 'width=1000, height=600');
         }
     </script>
-    <title>스파르타코딩클럽 | 부트스트랩 연습하기</title>
+    <style>
+        body{
+            background-size: cover;
+        }
+    </style>
    
 </head>
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="/jalggang">이제 그만 잘깡?</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <nav id="nav" class="navbar navbar-expand-md navbar-dark fixed-top bg-black"
+            style="padding: 0%; background-color: black;">
+            <a class="nav-link" href="/jalggang">
+                <img src="{{ url_for('static', filename='css/images/logo.png') }}" width="70px" height="50px" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -98,15 +107,16 @@
                     </li>
                 </ul>
                 <form class="form-inline mt-2 mt-md-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" style="height: 44px;">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><img
-                            src="{{ url_for('static', filename='css/images/search.jpg') }}" width="31px"
-                            height="31px" /></button>
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+                        style="height: 44px;">
+                    <a id="nav" class="nav-link" href="#">
+                        <img src="{{ url_for('static', filename='css/images/search.png') }}" width="31px" height="31px" />
+                    </a>
                 </form>
             </div>
         </nav>
     </header>
-    <div id="mypagePanel" style="background-image: url('static/css/images/mypage.jpg')">
+    <div id="mypagePanel">
         <h5>For Good Sleep & Life Style</h5>
         <h1>마이페이지</h1>
     </div>

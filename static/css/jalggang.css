@@ -4,15 +4,25 @@
 
 /* Padding below the footer and lighter body text */
 
-body {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-    color: black;
+@font-face {
+    font-family: 'KBIZHanmaumGothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/KBIZHanmaumGothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
-.row {
-    padding: 50px;
+* {
+    font-family: KBIZHanmaumGothic;
+    color: white;
 }
+
+body {
+    background-image: url('images/moon.jpg');
+    background-position: center;
+    background-repeat: repeat;
+    background-size: contain;
+}
+
 
 .carousel-inner>.carousel-item>img {
     width: 640px;
@@ -26,56 +36,33 @@ body {
 
 /*LOGIN BOX*/
 
-.LoginBox {
+#LoginBox {
     margin: 120px auto;
     width: 500px;
 }
 
 
-/*LIST*/
-
-.orders {
-    margin-top: 100px;
-}
-
-
-/*MYPAGE*/
-
-.info {
-    margin: 120px auto;
-    width: 500px;
-}
 
 
 /*Panel*/
 
 #LoginPanel {
+    background-image: url('images/List.jpg');
     background-position: center;
-    background-size: 1920px 600px;
+    background-size: cover;
     background-repeat: no-repeat;
-    margin-top: 10px;
+    margin-top: 30px;
     height: 400px;
     text-align: center;
     color: white;
     padding-top: 180px;
 }
 
-#ListPanel {
-    background-image: url("static/css/images/List.jpg");
-    background-position: center;
-    background-size: 1920px 600px;
-    background-repeat: no-repeat;
-    margin-top: 10px;
-    height: 400px;
-    text-align: center;
-    color: white;
-    padding-top: 180px;
-}
 
 #mypagePanel {
-    background-image: url("static/css/images/mypage.jpg");
+    background-image: url("images/mypage.jpg");
     background-position: center;
-    background-size: 1920px 700px;
+    background-size: cover;
     background-repeat: no-repeat;
     margin-top: 10px;
     height: 400px;
@@ -85,9 +72,9 @@ body {
 }
 
 #solutionPanel {
-    background-image: url("static/css/images/solution.jpg");
+    background-image: url("images/solution.jpg");
     background-position: center;
-    background-size: 1920px 450px;
+    background-size: cover;
     background-repeat: no-repeat;
     margin-top: 10px;
     height: 400px;
@@ -97,33 +84,12 @@ body {
 }
 
 #firebasebtn {
-    margin: 50px auto;
+    margin: 60px auto;
     width: 100px;
 }
 
-#resultPanel {
-    background-position: center;
-    background-size: 1920px 600px;
-    background-repeat: no-repeat;
-    margin-top: 10px;
-    height: 400px;
+.card{
     text-align: center;
-    color: white;
-    padding-top: 180px;
-    margin-bottom: 50px;
-}
-
-#reservationPanel {
-    background-image: url("static/css/images/consulting.jpg");
-    background-position: center;
-    background-size: 1920px 600px;
-    background-repeat: no-repeat;
-    margin-top: 10px;
-    height: 400px;
-    text-align: center;
-    color: white;
-    padding-top: 180px;
-    margin-bottom: 50px;
 }
 
 
@@ -131,7 +97,7 @@ body {
 
 .wrap {
     width: 1000px;
-    margin: 120px auto;
+    margin: 60px auto;
 }
 
 
@@ -166,7 +132,6 @@ body {
     width: 450px;
     height: 450px;
 }
-
 
 /*chart*/
 
