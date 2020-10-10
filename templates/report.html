@@ -1,189 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
 
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+    <title>그래프</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap"
+      rel="stylesheet"
+    />
 
-  <title>그래프</title>
-  <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet" />
-
-  
-  
-  <!-- Styles -->
-  <style>
-    body {
-      background-color: #30303d;
-      color: #fff;
-    }
-
-    #chartdiv {
-      width: 100%;
-      height: 500px;
-    }
-  </style>
-
-  <!-- Resources -->
-  <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-  <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-  <script src="https://cdn.amcharts.com/lib/4/themes/dark.js"></script>
-  <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
-
-  <!-- Chart code -->
-  <script>
-
-    am4core.ready(function () {
-      // Themes begin
-      am4core.useTheme(am4themes_dark);
-      am4core.useTheme(am4themes_animated);
-      // Themes end
-
-      var chart = am4core.create("chartdiv", am4charts.XYChart);
-      chart.colors.step = 2;
-
-      chart.legend = new am4charts.Legend();
-      chart.legend.position = "top";
-      chart.legend.paddingBottom = 20;
-      chart.legend.labels.template.maxWidth = 95;
-
-      var xAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-      xAxis.dataFields.category = "category";
-      xAxis.renderer.cellStartLocation = 0.1;
-      xAxis.renderer.cellEndLocation = 0.9;
-      xAxis.renderer.grid.template.location = 0;
-
-      var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
-      yAxis.min = 0;
-
-      function createSeries(value, name) {
-        var series = chart.series.push(new am4charts.ColumnSeries());
-        series.dataFields.valueY = value;
-        series.dataFields.categoryX = "category";
-        series.name = name;
-
-        series.events.on("hidden", arrangeColumns);
-        series.events.on("shown", arrangeColumns);
-
-        var bullet = series.bullets.push(new am4charts.LabelBullet());
-        bullet.interactionsEnabled = false;
-        bullet.dy = 30;
-        bullet.label.text = "{valueY}";
-        bullet.label.fill = am4core.color("#ffffff");
-
-        return series;
+    <!-- Styles -->
+    <style>
+      body {
+        background-color: #30303d;
+        color: #fff;
       }
 
-      
+      #chartdiv {
+        width: 100%;
+        height: 500px;
+      }
+    </style>
 
-      console.log(chart.data)
+    <!-- Resources -->
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/dark.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
 
+    <!-- Chart code -->
+    <script>
+      am4core.ready(function () {
+        // Themes begin
+        am4core.useTheme(am4themes_dark);
+        am4core.useTheme(am4themes_animated);
+        // Themes end
+        // want_list 배열 생성
+        var want_list=[]
+        var chart = am4core.create("chartdiv", am4charts.XYChart);
+        chart.colors.step = 2;
 
-      var name = $('#name').text();
-      $(document).ready(function () {
-        list()
-      });
+        chart.legend = new am4charts.Legend();
+        chart.legend.position = "top";
+        chart.legend.paddingBottom = 20;
+        chart.legend.labels.template.maxWidth = 95;
 
+        var xAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+        xAxis.dataFields.category = "category";
+        xAxis.renderer.cellStartLocation = 0.1;
+        xAxis.renderer.cellEndLocation = 0.9;
+        xAxis.renderer.grid.template.location = 0;
 
+        var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+        yAxis.min = 0;
 
-      function list() {
-        let name = $('#name').text();
-        $.ajax({
-          type: "GET",
-          url: '/showscore?name=' + name,
-          data: {},
-          success: function (response) {
-            if (response['result'] == 'success') {
-              let orders = response['all_orders']
-              for (let i = 0; i < orders.length; i++) {
-                let score = orders[i]
-                alert(score)
-                let temp_html = `{
-                    category: "${i}일차",
-                    no1: ${score}
-                  },`
-                chart.data.update(temp_html)
+        function createSeries(value, name) {
+          var series = chart.series.push(new am4charts.ColumnSeries());
+          series.dataFields.valueY = value;
+          series.dataFields.categoryX = "category";
+          series.name = name;
+
+          series.events.on("hidden", arrangeColumns);
+          series.events.on("shown", arrangeColumns);
+
+          var bullet = series.bullets.push(new am4charts.LabelBullet());
+          bullet.interactionsEnabled = false;
+          bullet.dy = 30;
+          bullet.label.text = "{valueY}";
+          bullet.label.fill = am4core.color("#ffffff");
+
+          return series;
+        }
+
+        
+
+        var name = $("#name").text();
+        $(document).ready(function () {
+          list();
+        });
+
+        function list() {
+          let name = $("#name").text();
+          $.ajax({
+            type: "GET",
+            url: "/showscore?name=" + name,
+            data: {},
+            success: function (response) {
+              if (response["result"] == "success") {
+                let orders = response["all_orders"];
+                for (let i = 0; i < orders.length; i++) {
+                  let score = orders[i];
+                  var thing = new Object();
+                  thing.id = `${i+1}`
+                  thing.category = `${i + 1}일차`;
+                  thing.no1 = score;
+                  want_list.push(thing);
+                }
+                // 차트 데이터를 넣는 곳을 push 스코프 안으로 옮김
+                chart.data = want_list;
               }
+            },
+          });
+        }
+       
+        createSeries("no1", "수면시간");
+        createSeries("no2", "2번요소");
+        createSeries("no3", "3번요소");
+        createSeries("no4", "4번요소");
+        createSeries("no5", "5번요소");
+        function arrangeColumns() {
+          var series = chart.series.getIndex(0);
+
+          var w =
+            1 -
+            xAxis.renderer.cellStartLocation -
+            (1 - xAxis.renderer.cellEndLocation);
+          if (series.dataItems.length > 1) {
+            var x0 = xAxis.getX(series.dataItems.getIndex(0), "categoryX");
+            var x1 = xAxis.getX(series.dataItems.getIndex(1), "categoryX");
+            var delta = ((x1 - x0) / chart.series.length) * w;
+            if (am4core.isNumber(delta)) {
+              var middle = chart.series.length / 2;
+
+              var newIndex = 0;
+              chart.series.each(function (series) {
+                if (!series.isHidden && !series.isHiding) {
+                  series.dummyData = newIndex;
+                  newIndex++;
+                } else {
+                  series.dummyData = chart.series.indexOf(series);
+                }
+              });
+              var visibleCount = newIndex;
+              var newMiddle = visibleCount / 2;
+
+              chart.series.each(function (series) {
+                var trueIndex = chart.series.indexOf(series);
+                var newIndex = series.dummyData;
+
+                var dx = (newIndex - trueIndex + middle - newMiddle) * delta;
+
+                series.animate(
+                  { property: "dx", to: dx },
+                  series.interpolationDuration,
+                  series.interpolationEasing
+                );
+                series.bulletsContainer.animate(
+                  { property: "dx", to: dx },
+                  series.interpolationDuration,
+                  series.interpolationEasing
+                );
+              });
             }
           }
-        })
-
-      }
-
-
-      createSeries("no1", "수면시간");
-      createSeries("no2", "2번요소");
-      createSeries("no3", "3번요소");
-      createSeries("no4", "4번요소");
-      createSeries("no5", "5번요소");
-      function arrangeColumns() {
-        var series = chart.series.getIndex(0);
-
-        var w =
-          1 -
-          xAxis.renderer.cellStartLocation -
-          (1 - xAxis.renderer.cellEndLocation);
-        if (series.dataItems.length > 1) {
-          var x0 = xAxis.getX(series.dataItems.getIndex(0), "categoryX");
-          var x1 = xAxis.getX(series.dataItems.getIndex(1), "categoryX");
-          var delta = ((x1 - x0) / chart.series.length) * w;
-          if (am4core.isNumber(delta)) {
-            var middle = chart.series.length / 2;
-
-            var newIndex = 0;
-            chart.series.each(function (series) {
-              if (!series.isHidden && !series.isHiding) {
-                series.dummyData = newIndex;
-                newIndex++;
-              } else {
-                series.dummyData = chart.series.indexOf(series);
-              }
-            });
-            var visibleCount = newIndex;
-            var newMiddle = visibleCount / 2;
-
-            chart.series.each(function (series) {
-              var trueIndex = chart.series.indexOf(series);
-              var newIndex = series.dummyData;
-
-              var dx = (newIndex - trueIndex + middle - newMiddle) * delta;
-
-              series.animate(
-                { property: "dx", to: dx },
-                series.interpolationDuration,
-                series.interpolationEasing
-              );
-              series.bulletsContainer.animate(
-                { property: "dx", to: dx },
-                series.interpolationDuration,
-                series.interpolationEasing
-              );
-            });
-          }
         }
-      }
-    }); // end am4core.ready()
-  </script>
-</head>
+      }); // end am4core.ready()
+    </script>
+  </head>
 
-<body>
-  <div id="chartdiv"></div>
-  <h1 id="name" style="text-align: center;">{{name}}</h1>
-  
-</body>
-
+  <body>
+    <div id="chartdiv"></div>
+    <h1 id="name" style="text-align: center">{{name}}</h1>
+  </body>
 </html>
