@@ -279,9 +279,18 @@ def savedb():
     sol_receive = data['arr']
     print(name_receive, sol_receive)
     db.solution.update_one({'name': name_receive}, {
-                           '$set': {'score': sol_receive}})
+                           '$set': {'solution': sol_receive}})
     return jsonify({'result': 'success'})
 
+@app.route('/savescore', methods=['POST'])
+def savescore():
+    data = request.get_json()
+    name_receive = data['name_give']
+    sol_receive = data['arr']
+    print(name_receive, sol_receive)
+    db.solution.update_one({'name': name_receive}, {
+                           '$set': {'score': sol_receive}})
+    return jsonify({'result': 'success'})
 
 @app.route('/savereserve', methods=['POST'])
 def savereserve():
