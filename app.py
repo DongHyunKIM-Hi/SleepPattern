@@ -279,7 +279,7 @@ def savedb():
     sol_receive = data['arr']
     print(name_receive, sol_receive)
     db.solution.update_one({'name': name_receive}, {
-                           '$set': {'solution': sol_receive}})
+                           '$set': {'score': sol_receive}})
     return jsonify({'result': 'success'})
 
 
