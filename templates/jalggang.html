@@ -23,7 +23,7 @@
 
     <!-- 쿠키 사용을 위한 Jquery-cookie 임포트 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/jalggang.css')}}?ver=2">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jalggang.css')}}?ver=7">
     <script>
         // 로딩 후 바로 실행
         $(document).ready(function () {
@@ -158,22 +158,22 @@
             <!-- Three columns of text below the carousel -->
             <div class="row">
                 <div class="col-lg-4">
-                    <img id="image1" src="{{ url_for('static', filename='css/images/bulb.jpg') }}">
+                    <img id="image1" src="{{ url_for('static', filename='css/images/bulb.png') }}">
                     <h2><br>오늘의 솔루션</h2>
                     <p><br>회원님의 최적의 수면을 위한 솔루션을 <br> 제공해 드립니다.</p>
                     <p><br><br><a class="btn btn-secondary" href="/solution" role="button">View details »</a></p>
                 </div>
                 <!-- /.col-lg-4 -->
                 <div class="col-lg-4">
-                    <img id="image2" src="{{ url_for('static', filename='css/images/graph1.jpg') }}">
-                    <h2><br>통계</h2>
-                    <p><br>회원님의 수면 중 뒤척임 정도, 코골이 등<br>수면의 질을 그래프를 통하여 나타냅니다.</p>
-                    <p><br><a class="btn btn-secondary" href="/result" role="button" target="_blank">View details »</a>
+                    <img id="image2" src="{{ url_for('static', filename='css/images/script.png') }}">
+                    <h2><br>진단</h2>
+                    <p><br>회원님의 수면상태를 판단해 드립니다.<br>전문성을 검증받은 진단지를 사용합니다.</p>
+                    <p><br><a class="btn btn-secondary" href="http://kjhnav.dothome.co.kr/PSQI.php" target="_blank">View details »</a>
                     </p>
                 </div>
                 <!-- /.col-lg-4 -->
                 <div class="col-lg-4">
-                    <img id="image3" src="{{ url_for('static', filename='css/images/calendar.jpg') }}">
+                    <img id="image3" src="{{ url_for('static', filename='css/images/calendar.png') }}">
                     <h2><br>상담예약/확인</h2>
                     <p><br>전문 상담사와 상담 예약을 잡으십시오.<br>수면의 질을 넘어, 당신의 인생이 달라집니다.</p>
                     <p><br><a class="btn btn-secondary" href="http://15.164.163.148:5001/" target="_blank"
