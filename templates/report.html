@@ -102,6 +102,7 @@
           success: function (response) {
             if (response["result"] == "success") {
               let orders = response["all_orders"];
+              let orders1 = response["all_orders1"]
               for (let i = 0; i < orders.length; i++) {
                 let score = orders[i];
                 var thing = new Object();
@@ -224,7 +225,6 @@
     }
 
     function savesolution() {
-      window.location.reload();
       alert("실행");
       let name = $('#getget').text();
       $.ajax({
@@ -233,10 +233,12 @@
         data: JSON.stringify({
           name_give: name,
           arr
+          //숫사 '24 14'
         }),
         contentType: "application/json; charset=utf-8",
         success: function () { }
       })
+      window.location.reload();
     }
   </script>
 </head>

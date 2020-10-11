@@ -259,9 +259,11 @@ def showsol():
 def showscore():
     name = request.args.get('name')
     want_item = db.solution.find_one({'name': name}, {'_id': 0})
-    order = list(want_item['score'])
-    print(order)
-    return jsonify({'result': 'success', 'all_orders': order})
+    order1 = list(want_item['score'])
+    order2 = list(want_item['solution'])
+    print(order1)
+    print(order2)
+    return jsonify({'result': 'success', 'all_orders': order1, 'all_orders1': order2})
 
 
 @app.route('/show2', methods=['GET'])
