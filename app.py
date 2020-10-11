@@ -259,11 +259,12 @@ def showsol():
 def showscore():
     name = request.args.get('name')
     want_item = db.solution.find_one({'name': name}, {'_id': 0})
-    order1 = list(want_item['score'])
-    order2 = list(want_item['solution'])
-    print(order1)
-    print(order2)
-    return jsonify({'result': 'success', 'all_orders': order1, 'all_orders1': order2})
+    score1 = list(want_item['score1'])
+    score2 = list(want_item['score2'])
+    score3 = list(want_item['score3'])
+    score4 = list(want_item['score4'])
+    score5 = list(want_item['score5'])
+    return jsonify({'result': 'success', 'score1': score1, 'score2': score2, 'score3': score3, 'score4': score4, 'score5': score5})
 
 
 @app.route('/show2', methods=['GET'])
@@ -279,9 +280,30 @@ def savedb():
     data = request.get_json()
     name_receive = data['name_give']
     sol_receive = data['arr']
-    print(name_receive, sol_receive)
     db.solution.update_one({'name': name_receive}, {
-                           '$set': {'score': sol_receive}})
+                           '$set': {'solution': sol_receive}})
+    return jsonify({'result': 'success'})
+
+
+@app.route('/savescore1', methods=['POST'])
+def savescore1():
+    data = request.get_json()
+    name_receive = data['name_give']
+    score1 = data['number1']
+    score2 = data['number2']
+    score3 = data['number3']
+    score4 = data['number4']
+    score5 = data['number5']
+    db.solution.update({'name': name_receive}, {
+        '$push': {'score1': score1}})
+    db.solution.update({'name': name_receive}, {
+        '$push': {'score2': score2}})
+    db.solution.update({'name': name_receive}, {
+        '$push': {'score3': score3}})
+    db.solution.update({'name': name_receive}, {
+        '$push': {'score4': score4}})
+    db.solution.update({'name': name_receive}, {
+        '$push': {'score5': score5}})
     return jsonify({'result': 'success'})
 
 
