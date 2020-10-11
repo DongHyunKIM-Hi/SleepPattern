@@ -2,202 +2,268 @@
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
 
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-  <title>{{name}}의 그래프</title>
-  <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet" />
+    <title>{{name}}의 그래프</title>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet" />
 
-  <!-- Styles -->
-  <style>
-    body {
-      background-color: #30303d;
-      color: #fff;
-    }
-
-    #chartdiv {
-      width: 100%;
-      height: 500px;
-    }
-  </style>
-
-  <!-- Resources -->
-  <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-  <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-  <script src="https://cdn.amcharts.com/lib/4/themes/dark.js"></script>
-  <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
-
-  <!-- Chart code -->
-  <script>
-    am4core.ready(function () {
-      // Themes begin
-      am4core.useTheme(am4themes_dark);
-      am4core.useTheme(am4themes_animated);
-      // Themes end
-      // want_list 배열 생성
-      var want_list = []
-      var chart = am4core.create("chartdiv", am4charts.XYChart);
-      chart.colors.step = 2;
-
-      chart.legend = new am4charts.Legend();
-      chart.legend.position = "top";
-      chart.legend.paddingBottom = 20;
-      chart.legend.labels.template.maxWidth = 95;
-
-      var xAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-      xAxis.dataFields.category = "category";
-      xAxis.renderer.cellStartLocation = 0.1;
-      xAxis.renderer.cellEndLocation = 0.9;
-      xAxis.renderer.grid.template.location = 0;
-
-      var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
-      yAxis.min = 0;
-
-      function createSeries(value, name) {
-        var series = chart.series.push(new am4charts.ColumnSeries());
-        series.dataFields.valueY = value;
-        series.dataFields.categoryX = "category";
-        series.name = name;
-
-        series.events.on("hidden", arrangeColumns);
-        series.events.on("shown", arrangeColumns);
-
-        var bullet = series.bullets.push(new am4charts.LabelBullet());
-        bullet.interactionsEnabled = false;
-        bullet.dy = 30;
-        bullet.label.text = "{valueY}";
-        bullet.label.fill = am4core.color("#ffffff");
-
-        return series;
-      }
-
-
-
-      var name = $("#getget").text();
-      $(document).ready(function () {
-        list();
-      });
-
-      function list() {
-        let name = $("#getget").text();
-        $.ajax({
-          type: "GET",
-          url: "/showscore?name=" + name,
-          data: {},
-          success: function (response) {
-            if (response["result"] == "success") {
-              let orders = response["all_orders"];
-              let orders1 = response["all_orders1"]
-              for (let i = 0; i < orders.length; i++) {
-                let score = orders[i];
-                var thing = new Object();
-                thing.id = `${i + 1}`
-                thing.category = `${i + 1}일차`;
-                thing.no1 = score;
-                want_list.push(thing);
-              }
-              // 차트 데이터를 넣는 곳을 push 스코프 안으로 옮김
-              chart.data = want_list;
-            }
-          },
-        });
-      }
-
-      createSeries("no1", "수면시간");
-      createSeries("no2", "2번요소");
-      createSeries("no3", "3번요소");
-      createSeries("no4", "4번요소");
-      createSeries("no5", "5번요소");
-      function arrangeColumns() {
-        var series = chart.series.getIndex(0);
-
-        var w =
-          1 -
-          xAxis.renderer.cellStartLocation -
-          (1 - xAxis.renderer.cellEndLocation);
-        if (series.dataItems.length > 1) {
-          var x0 = xAxis.getX(series.dataItems.getIndex(0), "categoryX");
-          var x1 = xAxis.getX(series.dataItems.getIndex(1), "categoryX");
-          var delta = ((x1 - x0) / chart.series.length) * w;
-          if (am4core.isNumber(delta)) {
-            var middle = chart.series.length / 2;
-
-            var newIndex = 0;
-            chart.series.each(function (series) {
-              if (!series.isHidden && !series.isHiding) {
-                series.dummyData = newIndex;
-                newIndex++;
-              } else {
-                series.dummyData = chart.series.indexOf(series);
-              }
-            });
-            var visibleCount = newIndex;
-            var newMiddle = visibleCount / 2;
-
-            chart.series.each(function (series) {
-              var trueIndex = chart.series.indexOf(series);
-              var newIndex = series.dummyData;
-
-              var dx = (newIndex - trueIndex + middle - newMiddle) * delta;
-
-              series.animate(
-                { property: "dx", to: dx },
-                series.interpolationDuration,
-                series.interpolationEasing
-              );
-              series.bulletsContainer.animate(
-                { property: "dx", to: dx },
-                series.interpolationDuration,
-                series.interpolationEasing
-              );
-            });
-          }
+    <!-- Styles -->
+    <style>
+        body {
+            background-color: #30303d;
+            color: #fff;
         }
-      }
-    }); // end am4core.ready()
 
-    var arr = [];
-    var name = $('#getget').text();
+        input-group-text {
+            width: 260px;
+        }
+
+        #chartdiv {
+            width: 100%;
+            height: 500px;
+        }
+    </style>
+
+    <!-- Resources -->
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/dark.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+    <!-- Chart code -->
+    <script>
+        am4core.ready(function() {
+            // Themes begin
+            am4core.useTheme(am4themes_dark);
+            am4core.useTheme(am4themes_animated);
+            // Themes end
+            // want_list 배열 생성
+            var want_list = []
+            var chart = am4core.create("chartdiv", am4charts.XYChart);
+            chart.colors.step = 2;
+
+            chart.legend = new am4charts.Legend();
+            chart.legend.position = "top";
+            chart.legend.paddingBottom = 20;
+            chart.legend.labels.template.maxWidth = 95;
+
+            var xAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+            xAxis.dataFields.category = "category";
+            xAxis.renderer.cellStartLocation = 0.1;
+            xAxis.renderer.cellEndLocation = 0.9;
+            xAxis.renderer.grid.template.location = 0;
+
+            var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+            yAxis.min = 0;
+
+            function createSeries(value, name) {
+                var series = chart.series.push(new am4charts.ColumnSeries());
+                series.dataFields.valueY = value;
+                series.dataFields.categoryX = "category";
+                series.name = name;
+
+                series.events.on("hidden", arrangeColumns);
+                series.events.on("shown", arrangeColumns);
+
+                var bullet = series.bullets.push(new am4charts.LabelBullet());
+                bullet.interactionsEnabled = false;
+                bullet.dy = 30;
+                bullet.label.text = "{valueY}";
+                bullet.label.fill = am4core.color("#ffffff");
+
+                return series;
+            }
 
 
-    function list1() {
-      let name = $('#getget').text();
-      $.ajax({
-        type: "GET",
-        url: '/showsol?name=' + name,
-        data: {},
-        success: function (response) {
-          if (response['result'] == 'success') {
-            let orders = response['all_orders']
-            for (let i = 0; i < orders.length; i++) {
-              let solution = orders[i]
-              let temp_html = `<tr>
+
+            var name = $("#getget").text();
+            $(document).ready(function() {
+                list();
+            });
+
+            function list() {
+                let name = $("#getget").text();
+                $.ajax({
+                    type: "GET",
+                    url: "/showscore?name=" + name,
+                    data: {},
+                    success: function(response) {
+                        if (response["result"] == "success") {
+                            let score1 = response["score1"];
+                            let score2 = response["score2"];
+                            let score3 = response["score3"];
+                            let score4 = response["score4"];
+                            let score5 = response["score5"];
+                        
+                            for (let i = 0; i < score1.length; i++) {
+                                let no1 = score1[i];
+                                let no2 = score2[i];
+                                let no3 = score3[i];
+                                let no4 = score4[i];
+                                let no5 = score5[i];
+                                var thing = new Object();
+                                thing.id = `${i + 1}`
+                                thing.category = `${i + 1}일차`;
+                                thing.no1 = no1;
+                                thing.no2 = no2;
+                                thing.no3 = no3;
+                                thing.no4 = no4;
+                                thing.no5 = no5;
+                                want_list.push(thing);
+                            }
+                            // 차트 데이터를 넣는 곳을 push 스코프 안으로 옮김
+                            chart.data = want_list;
+                        }
+                    },
+                });
+            }
+
+            createSeries("no1", "수면시간");
+            createSeries("no2", "일어난 횟수");
+            createSeries("no3", "눈뜬시간");
+            createSeries("no4", "기상시간");
+            createSeries("no5", "수면의 질");
+
+            function arrangeColumns() {
+                var series = chart.series.getIndex(0);
+
+                var w =
+                    1 -
+                    xAxis.renderer.cellStartLocation -
+                    (1 - xAxis.renderer.cellEndLocation);
+                if (series.dataItems.length > 1) {
+                    var x0 = xAxis.getX(series.dataItems.getIndex(0), "categoryX");
+                    var x1 = xAxis.getX(series.dataItems.getIndex(1), "categoryX");
+                    var delta = ((x1 - x0) / chart.series.length) * w;
+                    if (am4core.isNumber(delta)) {
+                        var middle = chart.series.length / 2;
+
+                        var newIndex = 0;
+                        chart.series.each(function(series) {
+                            if (!series.isHidden && !series.isHiding) {
+                                series.dummyData = newIndex;
+                                newIndex++;
+                            } else {
+                                series.dummyData = chart.series.indexOf(series);
+                            }
+                        });
+                        var visibleCount = newIndex;
+                        var newMiddle = visibleCount / 2;
+
+                        chart.series.each(function(series) {
+                            var trueIndex = chart.series.indexOf(series);
+                            var newIndex = series.dummyData;
+
+                            var dx = (newIndex - trueIndex + middle - newMiddle) * delta;
+
+                            series.animate({
+                                    property: "dx",
+                                    to: dx
+                                },
+                                series.interpolationDuration,
+                                series.interpolationEasing
+                            );
+                            series.bulletsContainer.animate({
+                                    property: "dx",
+                                    to: dx
+                                },
+                                series.interpolationDuration,
+                                series.interpolationEasing
+                            );
+                        });
+                    }
+                }
+            }
+        }); // end am4core.ready()
+
+        var arr = [];
+        var name = $('#getget').text();
+
+
+        function list1() {
+            let name = $('#getget').text();
+            $.ajax({
+                type: "GET",
+                url: '/showsol?name=' + name,
+                data: {},
+                success: function(response) {
+                    if (response['result'] == 'success') {
+                        let orders = response['all_orders']
+                        for (let i = 0; i < orders.length; i++) {
+                            let solution = orders[i]
+                            let temp_html = `<tr>
                                   <td>${solution}</td>
                                </tr>`
-              $('#solution_list').append(temp_html)
-              arr[i] = solution;
-            }
-          }
+                            $('#solution_list').append(temp_html)
+                            arr[i] = solution;
+                        }
+                    }
+                }
+            })
+
         }
-      })
 
-    }
+        function deletesolution() {
+            arr.pop()
+            $('#solution_list').empty()
+            for (let i = 0; i < arr.length; i++) {
+                let temp_html = `<div class="sol_list">${arr[i]}</div>`
+                $('#solution_list').append(temp_html)
+            }
+        }
 
+        function savesolution() {
+            alert("실행");
+            let name = $('#getget').text();
+            let score1 = $('#score1').val();
+            let score2 = $('#score2').val();
+            let score3 = $('#score3').val();
+            let score4 = $('#score4').val();
+            let score5 = $('#score5').val();
+           
+
+            if (score1 == '') {
+                alert('1번 점수를 입력해주세요');
+            } else if (score2 == '') {
+                alert('2번 점수를 입력해주세요');
+            } else if (score3 == '') {
+                alert('3번 점수를 입력해주세요');
+            } else if (score4 == '') {
+                alert('4번 점수를 입력해주세요');
+            } else if (score5 == '') {
+                alert('5번 점수를 입력해주세요');
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/savescore1",
+                    data: JSON.stringify({
+                        name_give: name,
+                        number1 : score1,
+                        number2 : score2,
+                        number3 : score3,
+                        number4 : score4,
+                        number5 : score5,
+
+                        //숫사 '24 14'
+                    }),
+                    contentType: "application/json; charset=utf-8",
+                    success: function() {}
+                })
+                window.location.reload();
+            }
+        }
+    
     function deletesolution() {
       arr.pop()
       $('#solution_list').empty()
@@ -244,31 +310,56 @@
 </head>
 
 <body>
-  <div id="chartdiv"></div>
-  <div id="scoremod" style="text-align: center;">
-    <h1 id="getget" style="text-align: center">{{name}}</h1>
-    <div style="text-align: center; margin:10px;">
-      <div id="firebasebtn">
-        <a class="btn btn-secondary"
-          href="https://console.firebase.google.com/project/jebal-e5856/firestore/data~2Fclients~2F%EC%95%84%EB%A6%B0"
-          target="_blank" role="button">파이어베이스</a>
-      </div>
-      <div id="sol">
-        <div class="solsolsol">
-          <br>
-          <input type="text" id="direct_input" placeholder="직접입력하세요">
-          <a class="btn btn-secondary" id="cardbtn" onclick="myenroll()" role="button">추가</a>
-          <br>
-          <div id="solution_list" style="color: white;">
-          </div>
-          <div style="margin-top: 20px;">
-            <a class="btn btn-secondary" id="cardbtn" onclick="deletesolution()" role="button">점수 삭제</a>
-            <a class="btn btn-secondary" id="cardbtn" onclick="savesolution()" role="button">점수 저장</a>
-          </div>
+    <div id="chartdiv"></div>
+    <div id="scoremod" style="text-align: center;">
+        <h1 id="getget" style="text-align: center">{{name}}</h1>
+        <div style="text-align: center; margin:10px;">
+            <div id="firebasebtn">
+                <a class="btn btn-secondary" href="https://console.firebase.google.com/project/jebal-e5856/firestore/data~2Fclients~2F%EC%95%84%EB%A6%B0" target="_blank" role="button">파이어베이스</a>
+            </div>
+            <div class="wrap" style="width: 500px;">
+                <div class="description-box">
+                    <h1>회원정보를 입력해 주십시오.</h1>
+                </div>
+                <div class="order-box">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon3">취침시간</span>
+                        </div>
+                        <input type="text" class="form-control" id="score1" aria-describedby="basic-addon3">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon3">일어난 횟수, 평균 깨어있는 시간</span>
+                        </div>
+                        <input type="text" class="form-control" id="score2" aria-describedby="basic-addon3">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon3">아침에 깬 시간</span>
+                        </div>
+                        <input type="text" class="form-control" id="score3" aria-describedby="basic-addon3">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon3">침대에서 벗어난 시간</span>
+                        </div>
+                        <input type="text" class="form-control" id="score4" aria-describedby="basic-addon3">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon3">지난밤 수면 평가</span>
+                        </div>
+                        <input type="text" class="form-control" id="score5" aria-describedby="basic-addon3">
+                    </div>
+                </div>
+                <div class="btn-box">
+                    <button onclick="savesolution()" type="button" class="btn btn-primary">추가하기</button>
+                </div>
+
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </body>
 
 </html>
