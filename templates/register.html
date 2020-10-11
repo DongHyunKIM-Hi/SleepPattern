@@ -24,7 +24,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/jalggang.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/jalggang.css') }}?ver=6">
   <script>
     // 간단한 회원가입 함수입니다.
     // 아이디, 비밀번호, 닉네임을 받아 DB에 저장합니다.
@@ -46,23 +46,8 @@
 
   </script>
   <style>
-    @font-face {
-      font-family: 'KBIZHanmaumGothic';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/KBIZHanmaumGothic.woff') format('woff');
-      font-weight: normal;
-      font-style: normal;
-    }
-
-    * {
-      font-family: KBIZHanmaumGothic;
-      color: white;
-    }
-
     body {
-      background-image: url('static/css/images/moon.jpg');
-      background-position: center;
-      background-repeat: repeat;
-      background-size: contain;
+      background-size: cover;
     }
   </style>
 </head>
@@ -109,7 +94,7 @@
   </div>
   <div>
 
-    <div class="RegisterBox">
+    <div id="RegisterBox">
       <h1>회원가입 페이지</h1>
       <div class="form-group">
         <label for="userid">ID</label>

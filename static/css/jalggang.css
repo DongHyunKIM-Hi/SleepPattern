@@ -83,6 +83,23 @@ body {
     padding-top: 180px;
 }
 
+#registerPanel {
+    background-image: url("images/handshake.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-top: 10px;
+    height: 400px;
+    text-align: center;
+    color: white;
+    padding-top: 180px;
+}
+
+#RegisterBox{
+    margin: 60px auto;
+    width: 500px;
+}
+
 #firebasebtn {
     margin: 60px auto;
     width: 100px;
