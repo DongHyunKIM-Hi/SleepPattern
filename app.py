@@ -284,15 +284,28 @@ def savedb():
                            '$set': {'solution': sol_receive}})
     return jsonify({'result': 'success'})
 
-@app.route('/savescore', methods=['POST'])
-def savescore():
+
+@app.route('/savescore1', methods=['POST'])
+def savescore1():
     data = request.get_json()
     name_receive = data['name_give']
-    sol_receive = data['arr']
-    print(name_receive, sol_receive)
-    db.solution.update_one({'name': name_receive}, {
-                           '$set': {'score': sol_receive}})
+    score1 = data['number1']
+    score2 = data['number2']
+    score3 = data['number3']
+    score4 = data['number4']
+    score5 = data['number5']
+    db.solution.update({'name': name_receive}, {
+        '$push': {'score1': score1}})
+    db.solution.update({'name': name_receive}, {
+        '$push': {'score2': score2}})
+    db.solution.update({'name': name_receive}, {
+        '$push': {'score3': score3}})
+    db.solution.update({'name': name_receive}, {
+        '$push': {'score4': score4}})
+    db.solution.update({'name': name_receive}, {
+        '$push': {'score5': score5}})
     return jsonify({'result': 'success'})
+
 
 @app.route('/savereserve', methods=['POST'])
 def savereserve():
