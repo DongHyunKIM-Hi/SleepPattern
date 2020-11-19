@@ -96,7 +96,7 @@ SECRET_KEY = 'apple'
 
 @app.route('/')
 def home():
-    return render_template('jalggang.html')
+    return render_template('main.html')
 
 
 @app.route('/login')
@@ -114,9 +114,9 @@ def register():
     return render_template('register.html')
 
 
-@app.route('/jalggang')
-def jalggang():
-    return render_template('jalggang.html')
+@app.route('/main')
+def main():
+    return render_template('main.html')
 
 
 @app.route('/mypage')
@@ -146,14 +146,10 @@ def popup():
     return render_template('popup.html', name=want_name)
 
 
-@app.route('/popupadd')
-def popupadd():
-    return render_template('popupadd.html')
-
-
-@app.route('/pop')
-def pop():
-    return render_template('index.html')
+@app.route('/cusadd')
+def cusadd():
+    print('hi')
+    return render_template('customeradd.html')
 
 
 #################################
@@ -247,8 +243,8 @@ def show():
     return jsonify({'result': 'success', 'all_orders': orders})
 
 
-@app.route('/showsol', methods=['GET'])
-def showsol():
+@app.route('/showsolution', methods=['GET'])
+def showsolution():
     name = request.args.get('name')
     want_item = db.solution.find_one({'name': name}, {'_id': 0})
     order = list(want_item['solution'])
@@ -306,24 +302,6 @@ def savescore1():
         '$push': {'score5': score5}})
     return jsonify({'result': 'success'})
 
-
-@app.route('/savereserve', methods=['POST'])
-def savereserve():
-    date_receive = request.form['date_give']
-    reserve_receive = request.form['reserve_give']
-    print(date_receive)
-    db.solution.update_one({'name': reserve_receive}, {
-                           '$set': {'year': date_receive}})
-    return jsonify({'result': 'success'})
-
-
-@app.route('/deletereserve', methods=['POST'])
-def deletereserve():
-    reserve_receive = request.form['reserve_give']
-    print(reserve_receive)
-    db.solution.update_one({'name': reserve_receive}, {
-                           '$set': {'year': '예약 미완료'}})
-    return jsonify({'result': 'success'})
 
 
 @app.route('/addcustomer', methods=['POST'])
