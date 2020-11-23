@@ -11,7 +11,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -19,10 +20,14 @@
     <!-- 쿠키 사용을 위한 Jquery-cookie 임포트 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/jalggang.css')}}?ver=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}?ver=1">
     <script>
         // ['쿠키'라는 개념에 대해 알아봅시다]
         // 로그인을 구현하면, 반드시 쿠키라는 개념을 사용합니다.
@@ -37,14 +42,14 @@
                     id_give: $('#userid').val(),
                     pw_give: $('#userpw').val()
                 },
-                success: function(response) {
+                success: function (response) {
                     if (response['result'] == 'success') {
                         // 로그인이 정상적으로 되면, 토큰을 받아옵니다.
                         // 이 토큰을 mytoken이라는 키 값으로 쿠키에 저장합니다.
                         $.cookie('mytoken', response['token']);
 
                         alert('로그인 완료!')
-                        window.location.href = '/jalggang'
+                        window.location.href = '/main'
                     } else {
                         // 로그인이 안되면 에러메시지를 띄웁니다.
                         alert(response['msg'])
@@ -54,7 +59,7 @@
         }
     </script>
     <style>
-        body{
+        body {
             background-size: cover;
         }
     </style>
@@ -64,7 +69,7 @@
     <header>
         <nav id="nav" class="navbar navbar-expand-md navbar-dark fixed-top bg-black"
             style="padding: 0%; background-color: black;">
-            <a class="nav-link" href="/jalggang">
+            <a class="nav-link" href="/main">
                 <img src="{{ url_for('static', filename='css/images/logo(black).jpg') }}" width="70px" height="50px" />
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
@@ -74,7 +79,7 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/jalggang">HOME <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="/main">HOME <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" onclick="logout()">LOGOUT</a>
@@ -90,7 +95,8 @@
                     <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
                         style="height: 44px;">
                     <a id="nav" class="nav-link" href="#">
-                        <img src="{{ url_for('static', filename='css/images/search.png') }}" width="31px" height="31px" />
+                        <img src="{{ url_for('static', filename='css/images/search.png') }}" width="31px"
+                            height="31px" />
                     </a>
                 </form>
             </div>

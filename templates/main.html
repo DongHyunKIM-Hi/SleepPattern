@@ -23,7 +23,7 @@
 
     <!-- 쿠키 사용을 위한 Jquery-cookie 임포트 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/jalggang.css')}}?ver=7">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}?ver=7">
     <script>
         // 로딩 후 바로 실행
         $(document).ready(function () {
@@ -67,14 +67,15 @@
             window.location.href = '/login'
         }
     </script>
-    
-    
+
+
 </head>
+
 <body>
     <header>
         <nav id="nav" class="navbar navbar-expand-md navbar-dark fixed-top bg-black"
             style="padding: 0%; background-color: black;">
-            <a class="nav-link" href="/jalggang">
+            <a class="nav-link" href="/main">
                 <img src="{{ url_for('static', filename='css/images/logo(black).jpg') }}" width="70px" height="50px" />
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
@@ -84,7 +85,7 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/jalggang">HOME <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="/main">HOME <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" onclick="logout()">LOGOUT</a>
@@ -100,7 +101,8 @@
                     <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
                         style="height: 44px;">
                     <a id="nav" class="nav-link" href="#">
-                        <img src="{{ url_for('static', filename='css/images/search.png') }}" width="31px" height="31px" />
+                        <img src="{{ url_for('static', filename='css/images/search.png') }}" width="31px"
+                            height="31px" />
                     </a>
                 </form>
             </div>
@@ -168,7 +170,8 @@
                     <img id="image2" src="{{ url_for('static', filename='css/images/script.png') }}">
                     <h2><br>진단</h2>
                     <p><br>회원님의 수면상태를 판단해 드립니다.<br>전문성을 검증받은 진단지를 사용합니다.</p>
-                    <p><br><a class="btn btn-secondary" href="http://kjhnav.dothome.co.kr/PSQI.php" target="_blank">View details »</a>
+                    <p><br><a class="btn btn-secondary" href="http://kjhnav.dothome.co.kr/PSQI.php" target="_blank">View
+                            details »</a>
                     </p>
                 </div>
                 <!-- /.col-lg-4 -->

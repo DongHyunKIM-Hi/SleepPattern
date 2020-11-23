@@ -24,7 +24,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/jalggang.css') }}?ver=6">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?ver=6">
   <script>
     // 간단한 회원가입 함수입니다.
     // 아이디, 비밀번호, 닉네임을 받아 DB에 저장합니다.
@@ -56,7 +56,7 @@
   <header>
     <nav id="nav" class="navbar navbar-expand-md navbar-dark fixed-top bg-black"
       style="padding: 0%; background-color: black;">
-      <a class="nav-link" href="/jalggang">
+      <a class="nav-link" href="/main">
         <img src="{{ url_for('static', filename='css/images/logo(black).jpg') }}" width="70px" height="50px" />
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
@@ -66,7 +66,7 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="/jalggang">HOME <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/main">HOME <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" onclick="logout()">LOGOUT</a>

@@ -11,6 +11,28 @@ from pymongo import MongoClient
 client = MongoClient('mongodb://agapao1:1998@15.164.163.148/', 27017)
 db = client.aunae
 
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
+
+cred = credentials.Certificate(
+    'sw_web\swmaker-84884-firebase-adminsdk-mhhgb-e61c6d6d0e.json')
+firebase_admin.initialize_app(cred)
+# db 생성 db를 사용할 때 db키워드를 사용하면 됨
+db = firestore.client()
+#   users안에 user02컬랙선안에 level 20을 설정
+#a = u'user02'
+#doc = db.collection(u'users').document(a)
+# doc.set({
+#    u'level': 20
+# })
+
+docs = db.collection(u'users').where(u'id', u'==', u'agapao').get()
+
+for doc in docs:
+    arr = doc.to_dict()
+    print(arr['name'])
+
 
 app = Flask(__name__)
 api = Api(app)
